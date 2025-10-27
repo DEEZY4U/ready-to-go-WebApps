@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Tetris</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-area">
+            <canvas id="gameCanvas" width="300" height="600"></canvas>
+        </div>
+        
+        <div class="side-panel">
+            <div class="info-box">
+                <h2>SCORE</h2>
+                <div class="score-display" id="score">0</div>
+                <div class="stats">
+                    <div class="stat-row">
+                        <span class="label">HIGH SCORE</span>
+                        <span class="value" id="highScore">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="label">LEVEL</span>
+                        <span class="value" id="level">1</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="label">LINES</span>
+                        <span class="value" id="lines">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h2>NEXT</h2>
+                <div class="next-piece">
+                    <canvas id="nextCanvas" width="120" height="120"></canvas>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h2>CONTROLS</h2>
+                <div class="controls">
+                    <div>◄ : Move Left</div>
+                    <div>► : Move Right</div>
+                    <div>▼ : Soft Drop</div>
+                    <div>▲ : Rotate</div>
+                    <div>SPACE : Hard Drop</div>
+                    <div>P : Pause</div>
+                </div>
+                <button id="startBtn">START GAME</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <h1>GAME OVER</h1>
+        <p>Final Score: <span id="finalScore">0</span></p>
+        <p>Lines Cleared: <span id="finalLines">0</span></p>
+        <p id="newHighScore" style="color: #ffff00; display: none;">★ NEW HIGH SCORE! ★</p>
+        <button id="restartBtn">PLAY AGAIN</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
