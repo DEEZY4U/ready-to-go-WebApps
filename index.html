@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .bg-particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+
+            33% {
+                transform: translateY(-100px) translateX(50px) rotate(120deg);
+            }
+
+            66% {
+                transform: translateY(-50px) translateX(-50px) rotate(240deg);
+            }
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .games-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: scaleIn 0.5s ease-out both;
+        }
+
+        .game-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .game-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .game-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .game-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .game-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .game-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .game-description {
+            color: #666;
+            text-align: center;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .play-btn {
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .play-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Color schemes for different games */
+        .game-1 .game-icon {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .game-2 .game-icon {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .game-3 .game-icon {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .game-4 .game-icon {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .game-5 .game-icon {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .game-6 .game-icon {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .games-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated background particles -->
+    <div id="particles"></div>
+
+    <div class="header">
+        <h1>🎮 Game Hub</h1>
+        <p>Choose your adventure and start playing!</p>
+    </div>
+
+    <div class="games-container">
+        <!-- Game Card 1 -->
+        <div class="game-card game-1" onclick="openGame('simple-game-2048')">
+            <div class="game-icon">🙾</div>
+            <div class="game-title">2048</div>
+            <div class="game-description">An exciting adventure awaits! Test your skills in this amazing game.</div>
+            <button class="play-btn">Play Now</button>
+        </div>
+
+        <!-- Game Card 2 -->
+        <div class="game-card game-2" onclick="openGame('simple-game-tetris')">
+            <div class="game-icon">🬳</div>
+            <div class="game-title">Tetris</div>
+            <div class="game-description">Challenge yourself with puzzles and strategic gameplay.</div>
+            <button class="play-btn">Play Now</button>
+        </div>
+
+        <!-- Game Card 3 -->
+        <div class="game-card game-3" onclick="openGame('simple-game-snake')">
+            <div class="game-icon">🐍</div>
+            <div class="game-title">Snake</div>
+            <div class="game-description">Compete for the highest score in this thrilling challenge.</div>
+            <button class="play-btn">Play Now</button>
+        </div>
+
+        <!-- Game Card 4 -->
+        <div class="game-card game-4" onclick="openGame('simple-game-breakout')">
+            <div class="game-icon">🮑</div>
+            <div class="game-title">Breakout</div>
+            <div class="game-description">Fast-paced action that will keep you on your toes!</div>
+            <button class="play-btn">Play Now</button>
+        </div>
+
+        <!-- Game Card 5 -->
+        <div class="game-card game-5" onclick="openGame('simple-game-match-maker')">
+            <div class="game-icon">🎭</div>
+            <div class="game-title">Match-Maker</div>
+            <div class="game-description">Embark on an epic journey filled with surprises.</div>
+            <button class="play-btn">Play Now</button>
+        </div>
+
+        <!-- Game Card 6 -->
+        <div class="game-card game-6" onclick="openGame('game6')">
+            <div class="game-icon">🎪</div>
+            <div class="game-title">Coming Soon...</div>
+            <div class="game-description">Fun and entertainment for everyone to enjoy!</div>
+            <button class="play-btn">Play Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const colors = ['#fff', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#30cfd0'];
+
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'bg-particle';
+                particle.style.width = Math.random() * 60 + 20 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Function to open games
+        function openGame(gameName) {
+            // Replace 'gameName' with your actual folder structure
+            // Example: if your games are in folders like 'game1/', 'game2/', etc.
+            window.location.href = `${gameName}/index.html`;
+
+            // Alternative: Open in new tab
+            // window.open(`${gameName}/index.html`, '_blank');
+        }
+
+        // Add click animation
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function (e) {
+                if (e.target.classList.contains('play-btn')) {
+                    e.stopPropagation();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
